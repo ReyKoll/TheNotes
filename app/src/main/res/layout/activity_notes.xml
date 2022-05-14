@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_main_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NotesActivity">
+
+    <LinearLayout
+        android:id="@+id/layout_header"
+        android:layout_marginStart="@dimen/_1sdp"
+        android:layout_marginBottom="@dimen/_23sdp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@null"
+        app:layout_constraintBottom_toTopOf="@id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_back_notes"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_back"
+            app:tint="@color/color_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp" />
+
+        <TextView
+            android:id="@+id/text_notes"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_35sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:fontFamily="@font/affect_bold"
+            android:includeFontPadding="false"
+            android:text="@string/notes"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/_20ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_search"
+        app:layout_constraintTop_toTopOf="@id/layout_header"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@drawable/background_search"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/ic_search"
+            app:tint="@color/color_gray"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_34sdp"
+            android:contentDescription="@string/app_name" />
+
+        <EditText
+            android:id="@+id/input_search"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:background="@null"
+            android:fontFamily="@font/ubuntu_regular"
+            android:hint="@string/search_notes"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:textColor="@color/color_white"
+            android:textColorHint="@color/color_gray"
+            android:textSize="@dimen/_12ssp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_notes"
+        app:layout_constraintBottom_toTopOf="@id/layout_quick_actions"
+        app:layout_constraintTop_toBottomOf="@id/layout_search"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_quick_actions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/color_primary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_add_note"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_add_circle"
+            app:tint="@color/color_gray"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp" />
+
+        <ImageView
+            android:id="@+id/image_add_image"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_image"
+            app:tint="@color/color_gray"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_no_notes"
+        app:layout_constraintTop_toBottomOf="@id/layout_search"
+        android:layout_marginTop="@dimen/_130sdp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:includeFontPadding="false"
+        android:text="@string/there_is_no_notes_yet"
+        android:textColor="@color/color_primary"
+        android:textSize="@dimen/_32ssp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/image_add_fab"
+        app:layout_constraintBottom_toTopOf="@id/layout_quick_actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:backgroundTint="@color/color_context"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
