@@ -1,6 +1,7 @@
 package com.example.thenotes.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -30,6 +31,8 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(CreateNoteActivity.this, R.color.color_primary));
 
         ImageView image_back_create_notes = findViewById(R.id.image_back_create_notes);
         image_back_create_notes.setOnClickListener(new View.OnClickListener() {
