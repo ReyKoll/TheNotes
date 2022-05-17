@@ -16,7 +16,7 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:fontFamily="@font/ubuntu_bold"
         android:includeFontPadding="false"
-        android:textColor="@color/color_white"
+        android:textColor="@color/color_context"
         android:textSize="@dimen/_15ssp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

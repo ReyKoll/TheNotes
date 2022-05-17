@@ -34,7 +34,15 @@ public class NotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(NotesActivity.this, R.color.color_primary));
+        /* Status bar section */
+        //  set status text dark
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // set status background color = main background color
+        getWindow().setStatusBarColor(
+                ContextCompat.getColor(
+                        NotesActivity.this,
+                        R.color.color_main_bg)
+        );
 
         ImageView image_add_fab = findViewById(R.id.image_add_fab);
         image_add_fab.setOnClickListener(new View.OnClickListener() {

@@ -32,7 +32,15 @@ public class CreateNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(CreateNoteActivity.this, R.color.color_primary));
+        /* Status bar section */
+        //  set status text dark
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // set status background color = main background color
+        getWindow().setStatusBarColor(
+                ContextCompat.getColor(
+                    CreateNoteActivity.this,
+                    R.color.color_main_bg)
+        );
 
         ImageView image_back_create_notes = findViewById(R.id.image_back_create_notes);
         image_back_create_notes.setOnClickListener(new View.OnClickListener() {
