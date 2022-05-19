@@ -44,6 +44,14 @@ public class NotesActivity extends AppCompatActivity {
                         R.color.color_main_bg)
         );
 
+        ImageView image_back_notes = findViewById(R.id.image_back_notes);
+        image_back_notes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         ImageView image_add_fab = findViewById(R.id.image_add_fab);
         image_add_fab.setOnClickListener(new View.OnClickListener() {
             @Override

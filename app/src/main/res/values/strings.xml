@@ -6,4 +6,9 @@
     <string name="note_title">Title</string>
     <string name="note_subtitle">Subtitle</string>
     <string name="type_note_here">Type note here…</string>
+    <string name="hub">hub</string>
+    <string name="btc">Bitcoin</string>
+    <string name="eth">Ethereum</string>
+    <string name="chart">Chart</string>
+    <string name="notes_hub">Notes</string>
 </resources>
