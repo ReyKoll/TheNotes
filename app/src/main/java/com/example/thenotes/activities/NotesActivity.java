@@ -37,7 +37,7 @@ public class NotesActivity extends AppCompatActivity {
         /* Status bar section */
         //  set status text dark
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        // set status background color = main background color
+        // set status bar color
         getWindow().setStatusBarColor(
                 ContextCompat.getColor(
                         NotesActivity.this,

@@ -1,8 +1,10 @@
 package com.example.thenotes.adapters;
 
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,12 +51,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView text_title, text_subtitle, text_date;
+        ImageView image_in_note;
 
         NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             text_title = itemView.findViewById(R.id.text_title);
             text_subtitle = itemView.findViewById(R.id.text_subtitle);
             text_date = itemView.findViewById(R.id.text_date);
+            image_in_note = itemView.findViewById(R.id.image_in_note);
         }
 
         void setNote(Note note) {
@@ -66,6 +70,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 text_subtitle.setText(note.getSubtitle());
 
             text_date.setText(note.getDate());
+
+            if (note.getImage_path() != null) {
+                image_in_note.setImageBitmap(BitmapFactory.decodeFile(note.getImage_path()));
+                image_in_note.setVisibility(View.VISIBLE);
+            }
+            else {
+                image_in_note.setVisibility(View.GONE);
+            }
         }
     }
 }
