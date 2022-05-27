@@ -43,6 +43,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private String selectedImagePath;
 
     final Note note = new Note();
+    private Note availableNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +95,27 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
+        if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+            availableNote = (Note) getIntent().getSerializableExtra("note");
+            setViewOrUpdateNote();
+        }
+
         image_save.setOnClickListener(view -> saveNote());
 
         selectedImagePath = "";
+    }
+
+    private void setViewOrUpdateNote() {
+        input_title.setText(availableNote.getTitle());
+        input_subtitle.setText(availableNote.getSubtitle());
+        input_note.setText(availableNote.getNote());
+        text_date.setText(availableNote.getDate());
+
+        if (availableNote.getImage_path() != null && !availableNote.getImage_path().trim().isEmpty()) {
+            image_note.setImageBitmap(BitmapFactory.decodeFile(availableNote.getImage_path()));
+            image_note.setVisibility(View.VISIBLE);
+            selectedImagePath = availableNote.getImage_path();
+        }
     }
 
     private void saveNote() {
@@ -114,6 +133,9 @@ public class CreateNoteActivity extends AppCompatActivity {
         note.setNote(input_note.getText().toString());
         note.setDate(text_date.getText().toString());
         note.setImage_path(selectedImagePath);
+
+        if (availableNote != null)
+            note.setId(availableNote.getId());
 
         @SuppressLint("StaticFieldLeak")
         class SaveNoteTask extends AsyncTask<Void, Void, Void> {
