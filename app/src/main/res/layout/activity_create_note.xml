@@ -58,6 +58,19 @@
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp" />
 
+            <ImageView
+                android:id="@+id/image_note_delete"
+                android:contentDescription="@string/app_name"
+                app:layout_constraintBottom_toBottomOf="@id/image_add"
+                app:layout_constraintTop_toTopOf="@id/image_add"
+                app:layout_constraintEnd_toStartOf="@+id/image_add"
+                app:tint="@color/color_delete"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp" />
+
             <EditText
                 android:id="@+id/input_title"
                 android:layout_marginStart="@dimen/_12sdp"
@@ -132,6 +145,21 @@
                 app:layout_constraintTop_toBottomOf="@id/input_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/image_remove"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/background_delete"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/color_white"
+                app:layout_constraintEnd_toEndOf="@id/image_note"
+                app:layout_constraintTop_toTopOf="@id/image_note"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp" />
 
             <EditText
                 android:id="@+id/input_note"

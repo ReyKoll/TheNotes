@@ -6,4 +6,5 @@
     <color name="color_main_bg">#FFFAFA</color>
     <color name="color_context">#FF9900</color>
     <color name="color_primary">#0B0700</color>
+    <color name="color_delete">#D32F2F</color>
 </resources>

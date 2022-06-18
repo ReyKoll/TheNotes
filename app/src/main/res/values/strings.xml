@@ -11,4 +11,8 @@
     <string name="eth">Ethereum</string>
     <string name="chart">Chart</string>
     <string name="notes_hub">Notes</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="are_you_sure">Are you sure ?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>
