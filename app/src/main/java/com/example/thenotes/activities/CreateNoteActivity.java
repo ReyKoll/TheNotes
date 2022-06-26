@@ -298,7 +298,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             filePath = cursor.getString(index);
             cursor.close();
         }
-
         return filePath;
     }
 }

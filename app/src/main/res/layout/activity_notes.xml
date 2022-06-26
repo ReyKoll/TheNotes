@@ -86,7 +86,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_notes"
-        app:layout_constraintBottom_toTopOf="@id/layout_quick_actions"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_search"
         android:layout_marginStart="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_2sdp"
@@ -98,37 +98,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <LinearLayout
-        android:id="@+id/layout_quick_actions"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/color_primary"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/_15sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/image_add_note"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_add_circle"
-            app:tint="@color/color_gray"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_23sdp" />
-
-        <ImageView
-            android:id="@+id/image_add_image"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_image"
-            app:tint="@color/color_gray"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_23sdp" />
-    </LinearLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/image_add_fab"
-        app:layout_constraintBottom_toTopOf="@id/layout_quick_actions"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_20sdp"

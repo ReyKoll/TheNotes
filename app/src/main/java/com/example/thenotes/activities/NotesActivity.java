@@ -10,7 +10,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +82,23 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
         recycler_view_notes.setAdapter(noteAdapter);
 
         getNotes(REQUEST_CODE_DISPLAY_NOTE, false);
+
+        EditText input_search = findViewById(R.id.input_search);
+        input_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                noteAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (noteList.size() != 0)
+                    noteAdapter.searchNotes(editable.toString());
+            }
+        });
     }
 
     @Override
