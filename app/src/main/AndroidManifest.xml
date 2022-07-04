@@ -16,6 +16,9 @@
         android:theme="@style/SplashTheme"
         tools:targetApi="q">
         <activity
+            android:name=".activities.ChartActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CreateNoteActivity"
             android:exported="false" />
         <activity

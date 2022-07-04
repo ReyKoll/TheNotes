@@ -6,8 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.thenotes.R;
 
@@ -29,11 +28,21 @@ public class MainActivity extends AppCompatActivity {
                         R.color.color_main_bg)
         );
 
-        LinearLayout layout_note_hub = findViewById(R.id.layout_note_hub);
-        layout_note_hub.setOnClickListener(new View.OnClickListener() {
+        TextView text_notes = findViewById(R.id.text_notes);
+        TextView text_chart = findViewById(R.id.text_chart);
+
+        text_notes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), NotesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NotesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        text_chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChartActivity.class);
                 startActivity(intent);
             }
         });
