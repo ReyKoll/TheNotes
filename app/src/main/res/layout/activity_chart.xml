@@ -13,6 +13,7 @@
         android:id="@+id/layout_header_chart"
         android:layout_marginStart="@dimen/_1sdp"
         android:layout_marginBottom="@dimen/_23sdp"
+        app:layout_constraintBottom_toTopOf="@id/pie_chart"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@color/color_main_bg"
@@ -49,7 +50,10 @@
 
 <com.github.mikephil.charting.charts.PieChart
     android:id="@+id/pie_chart"
-
+    app:layout_constraintTop_toBottomOf="@id/layout_header_chart"
+    android:background="@color/color_main_bg"
+    android:layout_marginTop="@dimen/_45sdp"
+    android:layout_marginBottom="@dimen/_55sdp"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
