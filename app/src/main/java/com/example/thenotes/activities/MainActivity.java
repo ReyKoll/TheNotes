@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_TheNotes);
         setContentView(R.layout.activity_main);
 
-        /* Status bar section */
+        //region Status bar section
         //  set status text dark
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // set status bar color
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this,
                         R.color.color_main_bg)
         );
+        //endregion
 
         TextView text_notes = findViewById(R.id.text_notes);
         TextView text_chart = findViewById(R.id.text_chart);

@@ -42,7 +42,7 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        /* Status bar section */
+        //region Status bar section
         //  set status text dark
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // set status bar color
@@ -51,6 +51,7 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
                         NotesActivity.this,
                         R.color.color_main_bg)
         );
+        //endregion
 
         ImageView image_back_notes = findViewById(R.id.image_back_notes);
         image_back_notes.setOnClickListener(new View.OnClickListener() {

@@ -48,14 +48,14 @@
 
     </LinearLayout>
 
-<com.github.mikephil.charting.charts.PieChart
-    android:id="@+id/pie_chart"
-    app:layout_constraintTop_toBottomOf="@id/layout_header_chart"
-    android:background="@color/color_main_bg"
-    android:layout_marginTop="@dimen/_45sdp"
-    android:layout_marginBottom="@dimen/_55sdp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        app:layout_constraintTop_toBottomOf="@id/layout_header_chart"
+        android:background="@color/color_main_bg"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:layout_marginBottom="@dimen/_55sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/text_add"

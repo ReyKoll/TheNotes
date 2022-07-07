@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,6 +26,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChartActivity extends AppCompatActivity {
@@ -33,12 +35,12 @@ public class ChartActivity extends AppCompatActivity {
     PieChart pie_chart;
     EditText input_value, input_label;
     TextView text_add, text_delete, text_add_dialog_chart, text_cancel_dialog_chart;
+    ImageView image_back_chart;
 
     ChartHelper chartHelper;
     SQLiteDatabase chartDatabase;
 
     PieDataSet pieDataSet = new PieDataSet(null, null);
-    ArrayList<IPieDataSet> dataSets = new ArrayList<>();
     PieData pieData;
 
     @Override
@@ -46,7 +48,7 @@ public class ChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-        /* Status bar section */
+        //region Status bar section
         //  set status text dark
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // set status bar color
@@ -55,16 +57,25 @@ public class ChartActivity extends AppCompatActivity {
                         ChartActivity.this,
                         R.color.color_main_bg)
         );
+        // endregion
 
-        ImageView image_back_chart = findViewById(R.id.image_back_chart);
-        image_back_chart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        chartHelper = new ChartHelper(this);
+        try {
+            chartHelper.updateDataBase();
+        }
+        catch (IOException mIOException) {
+            throw new Error("Unable To Update Database");
+        }
 
-        /* Find Views ID */
+        try {
+            chartDatabase = chartHelper.getWritableDatabase();
+        }
+        catch (SQLException mSQLException) {
+            throw mSQLException;
+        }
+
+        // region Views ID
+        image_back_chart = findViewById(R.id.image_back_chart);
         pie_chart = findViewById(R.id.pie_chart);
         input_value = findViewById(R.id.input_value);
         input_label = findViewById(R.id.input_label);
@@ -72,6 +83,14 @@ public class ChartActivity extends AppCompatActivity {
         text_delete = findViewById(R.id.text_delete);
         text_add_dialog_chart = findViewById(R.id.text_add_dialog_chart);
         text_cancel_dialog_chart = findViewById(R.id.text_cancel_dialog_chart);
+        //endregion
+
+        image_back_chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         text_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +101,7 @@ public class ChartActivity extends AppCompatActivity {
 
         pie_chart.setNoDataText("There is no data yet");
 
+        showPieChart();
     }
 
     private void showAddToChartDialog() {
@@ -91,16 +111,17 @@ public class ChartActivity extends AppCompatActivity {
                     R.layout.layout_add_chart_values,
                     (ViewGroup) findViewById(R.id.layout_add_chart_values_container)
             );
-
             builder.setView(view);
             dialogAddToChart = builder.create();
+
             if (dialogAddToChart.getWindow() != null)
                 dialogAddToChart.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
             view.findViewById(R.id.text_add_dialog_chart).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPieChart();
+                    //showPieChart();
+
                 }
             });
 
@@ -116,12 +137,16 @@ public class ChartActivity extends AppCompatActivity {
 
     private ArrayList<PieEntry> getDataValues() {
         ArrayList<PieEntry> values = new ArrayList<>();
-        Cursor cursor = chartHelper.getValues();
+        Cursor cursor = chartDatabase.rawQuery(
+                "SELECT * FROM ChartTable", null
+        );
+        cursor.moveToFirst();
 
-        for (int i = 0; i < cursor.getCount(); ++i) {
-            cursor.moveToNext();
+        while (!cursor.isAfterLast()) {
             values.add(new PieEntry(cursor.getFloat(0), String.valueOf(cursor.getString(1))));
+            cursor.moveToNext();
         }
+        cursor.close();
 
         return values;
     }

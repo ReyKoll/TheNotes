@@ -56,7 +56,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
-        /* Status bar section */
+        //region Status bar section
         //  set status text dark
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // set status bar color
@@ -65,7 +65,9 @@ public class CreateNoteActivity extends AppCompatActivity {
                     CreateNoteActivity.this,
                     R.color.color_main_bg)
         );
+        //endregion
 
+        // region IDs
         /* Images id */
         image_back_create_notes = findViewById(R.id.image_back_create_notes);
         image_add = findViewById(R.id.image_add);
@@ -82,6 +84,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         text_date.setText(
                 new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault()).format(new Date())
         );
+        //endregion
 
         image_back_create_notes.setOnClickListener(view -> onBackPressed());
 
