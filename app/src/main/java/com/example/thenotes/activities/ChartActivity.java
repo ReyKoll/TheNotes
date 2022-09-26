@@ -4,15 +4,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,23 +22,21 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChartActivity extends AppCompatActivity {
-    private AlertDialog dialogAddToChart;
+    private AlertDialog dialogAddToChart, dialogDelete;
 
-    PieChart pie_chart;
-    EditText input_value, input_label;
-    TextView text_add, text_delete, text_add_dialog_chart, text_cancel_dialog_chart;
+    TextView text_add, text_delete, text_add_dialog_chart, text_cancel_dialog_chart, text_cancel_dialog_chart_delete, text_delete_dialog_chart;
     ImageView image_back_chart;
+    EditText input_value, input_label;
 
     ChartHelper chartHelper;
     SQLiteDatabase chartDatabase;
 
+    PieChart pie_chart;
     PieDataSet pieDataSet = new PieDataSet(null, null);
     PieData pieData;
 
@@ -59,31 +56,20 @@ public class ChartActivity extends AppCompatActivity {
         );
         // endregion
 
-        chartHelper = new ChartHelper(this);
-        try {
-            chartHelper.updateDataBase();
-        }
-        catch (IOException mIOException) {
-            throw new Error("Unable To Update Database");
-        }
-
-        try {
-            chartDatabase = chartHelper.getWritableDatabase();
-        }
-        catch (SQLException mSQLException) {
-            throw mSQLException;
-        }
-
         // region Views ID
         image_back_chart = findViewById(R.id.image_back_chart);
-        pie_chart = findViewById(R.id.pie_chart);
-        input_value = findViewById(R.id.input_value);
-        input_label = findViewById(R.id.input_label);
+        pie_chart = (PieChart)findViewById(R.id.pie_chart);
+
         text_add = findViewById(R.id.text_add);
         text_delete = findViewById(R.id.text_delete);
         text_add_dialog_chart = findViewById(R.id.text_add_dialog_chart);
         text_cancel_dialog_chart = findViewById(R.id.text_cancel_dialog_chart);
+        text_delete_dialog_chart = findViewById(R.id.text_delete_dialog_chart);
+        text_cancel_dialog_chart_delete = findViewById(R.id.text_cancel_dialog_chart_delete);
         //endregion
+
+        chartHelper = new ChartHelper(getApplicationContext());
+        chartDatabase = chartHelper.getWritableDatabase();
 
         image_back_chart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +85,28 @@ public class ChartActivity extends AppCompatActivity {
             }
         });
 
-        pie_chart.setNoDataText("There is no data yet");
+        text_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDeleteDialog();
+            }
+        });
 
+        pie_chart.setNoDataText("There is no data yet");
+        pie_chart.setNoDataTextColor(R.color.color_primary);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        chartDatabase = chartHelper.getReadableDatabase();
         showPieChart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        chartDatabase.close();
     }
 
     private void showAddToChartDialog() {
@@ -109,8 +114,9 @@ public class ChartActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(ChartActivity.this);
             View view = LayoutInflater.from(this).inflate(
                     R.layout.layout_add_chart_values,
-                    (ViewGroup) findViewById(R.id.layout_add_chart_values_container)
+                    findViewById(R.id.layout_add_chart_values_container)
             );
+
             builder.setView(view);
             dialogAddToChart = builder.create();
 
@@ -120,8 +126,7 @@ public class ChartActivity extends AppCompatActivity {
             view.findViewById(R.id.text_add_dialog_chart).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //showPieChart();
-
+                    //save();
                 }
             });
 
@@ -135,21 +140,91 @@ public class ChartActivity extends AppCompatActivity {
         dialogAddToChart.show();
     }
 
+    private void showDeleteDialog() {
+        if (dialogDelete == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ChartActivity.this);
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_delete_chart_values,
+                    findViewById(R.id.layout_delete_chart_values_container)
+            );
+
+            builder.setView(view);
+            dialogDelete = builder.create();
+
+            if (dialogDelete.getWindow() != null)
+                dialogDelete.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+            view.findViewById(R.id.text_delete_dialog_chart).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //delete();
+                }
+            });
+
+            view.findViewById(R.id.text_cancel_dialog_chart_delete).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogDelete.dismiss();
+                }
+            });
+        }
+        dialogDelete.show();
+    }
+
     private ArrayList<PieEntry> getDataValues() {
         ArrayList<PieEntry> values = new ArrayList<>();
         Cursor cursor = chartDatabase.rawQuery(
-                "SELECT * FROM ChartTable", null
+                "SELECT * FROM " + ChartHelper.TABLE_NAME,
+                null
         );
-        cursor.moveToFirst();
 
-        while (!cursor.isAfterLast()) {
-            values.add(new PieEntry(cursor.getFloat(0), String.valueOf(cursor.getString(1))));
+        for (int i = 0; i < cursor.getCount(); ++i) {
             cursor.moveToNext();
+            values.add(new PieEntry(cursor.getFloat(2), String.valueOf(cursor.getString(1))));
         }
         cursor.close();
 
         return values;
     }
+
+//    private void save() {
+//        ContentValues contentValues = new ContentValues();
+//
+//        View view = LayoutInflater.from(this).inflate(
+//                R.layout.layout_add_chart_values,
+//                findViewById(R.id.layout_add_chart_values_container)
+//        );
+//        input_value = view.findViewById(R.id.input_value);
+//        input_label = view.findViewById(R.id.input_label);
+//
+//        String value = input_value.getText().toString();
+//        String label = input_label.getText().toString();
+//
+//        contentValues.put(ChartHelper.COLUMN_LABEL, label);
+//        contentValues.put(ChartHelper.COLUMN_CURRENCY, value);
+//
+//
+//            chartDatabase.update(
+//                    ChartHelper.TABLE_NAME,
+//                    contentValues,
+//                    ChartHelper.COLUMN_ID + "=" + userID,
+//                    null
+//            );
+//        else
+//            chartDatabase.insert(
+//                    ChartHelper.TABLE_NAME,
+//                    null,
+//                    contentValues
+//            );
+//    }
+//
+//    private void delete() {
+//        chartDatabase.delete(
+//                ChartHelper.TABLE_NAME,
+//                "_id = ?",
+//                new String[]{String.valueOf(userID)}
+//        );
+//    }
 
     private void showPieChart() {
         chartHelper = new ChartHelper(this);
@@ -157,17 +232,15 @@ public class ChartActivity extends AppCompatActivity {
         chartDatabase = chartHelper.getWritableDatabase();
 
         pieDataSet.setValues(getDataValues());
-        pieDataSet.setLabel("Currency");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(15f);
+        pieDataSet.setValueLineWidth(4);
 
         pieData = new PieData(pieDataSet);
 
         pie_chart.setData(pieData);
         pie_chart.getDescription().setEnabled(false);
         pie_chart.animate();
-
-        pieDataSet.setValueLineWidth(4);
     }
 }

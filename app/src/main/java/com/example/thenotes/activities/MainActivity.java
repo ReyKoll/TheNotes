@@ -29,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
         );
         //endregion
 
+        // region Views ID
         TextView text_notes = findViewById(R.id.text_notes);
         TextView text_chart = findViewById(R.id.text_chart);
+        //endregion
 
         text_notes.setOnClickListener(new View.OnClickListener() {
             @Override

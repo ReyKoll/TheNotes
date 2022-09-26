@@ -20,4 +20,8 @@
     <string name="add_value_to_chart">Add Value to Chart</string>
     <string name="add_a_value">Add a value</string>
     <string name="add_a_label">Add a label</string>
+    <string name="delete_value_from_chart">Delete Value From Chart</string>
+    <string name="write_a_label_to_delete">Write a label to delete</string>
+    <string name="delete_chart_value">Delete</string>
+    <string name="settings">Settings</string>
 </resources>

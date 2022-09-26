@@ -82,7 +82,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         /* Texts id */
         text_date = findViewById(R.id.text_date);
         text_date.setText(
-                new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault()).format(new Date())
+                new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.ENGLISH).format(new Date())
         );
         //endregion
 
